@@ -1,0 +1,23 @@
+Approach:
+
+
+
+traverse from n-2 index and store last element in maxright.
+update maxright =max(maxright,arr[i])
+maxprofit=max(maxprofit,maxright-arr[i]).
+
+
+Code:
+
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int minprice=prices.back();
+        int maxprofit=0;
+        for(int i=prices.size()-2;i>=0;i--){
+            minprice=max(minprice,prices[i]);
+            maxprofit=max(maxprofit,-1*prices[i]+minprice);
+        }
+        return maxprofit;
+    }
+};
