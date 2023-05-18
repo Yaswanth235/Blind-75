@@ -25,10 +25,6 @@ class Solution{
     }
     TNode* sortedListToBST(LNode *head) {
          if(head==NULL)return NULL;
-         if(head->next==NULL){
-             TNode* root=new TNode(head->data);
-             return root;
-         }
          return solve(head,NULL);
     }
 };
