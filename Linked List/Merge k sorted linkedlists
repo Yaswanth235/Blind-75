@@ -1,0 +1,68 @@
+Approach:
+
+1. Define a function merge that takes two pointers to linked lists as input and merges them in a sorted manner.
+
+a. Create a dummy node with a value of -1 and a temporary node pointing to it.
+b. Compare the first node of the left and right linked lists, and append the smaller one to the temporary node.
+c. Continue this process until either of the lists becomes empty.
+d. Append the remaining nodes of the non-empty list to the temporary node.
+e. Return the next node of the dummy node.
+
+2.Define a function mergeSort that takes three arguments - a vector of linked lists, a starting index, and an ending index. It performs merge sort on the linked lists from the starting index to the ending index.
+
+a. If the starting index is equal to the ending index, return the linked list at that index.
+b. Calculate the mid index and call mergeSort recursively on the left and right halves of the vector.
+c. Merge the two sorted linked lists obtained from the recursive calls using the merge function and return the result.
+
+3.Define the main function mergeKLists that takes the vector of linked lists as input and returns a single sorted linked list.
+
+a. If the input vector is empty, return a null pointer.
+b. Call the mergeSort function on the entire input vector, from index 0 to index k-1, where k is the size of the input vector.
+c. Return the merged linked list obtained from the mergeSort function call.
+
+Code:
+
+class Solution {
+public:
+    ListNode* merge(ListNode* list1, ListNode* list2) {
+        ListNode*p=new ListNode(-1);
+        ListNode*q=p;
+        ListNode*r=list1;
+        ListNode*s=list2;
+        while(r&&s){
+            if(r->val>s->val){
+                q->next=s;
+                s=s->next;
+                q=q->next;
+            }
+            else{
+                q->next=r;
+                r=r->next;
+                q=q->next;
+            } 
+        }
+         while(r){
+                q->next=r;
+                r=r->next;
+                q=q->next;
+            }
+            while(s){
+                q->next=s;
+                s=s->next;
+                q=q->next;
+            }
+        return p->next;
+    }
+    ListNode* merge1(vector<ListNode*>& lists, int start, int end) {
+        if (start==end) 
+            return lists[start];
+        int mid=start+(end-start)/2;
+        ListNode*left=merge1(lists,start,mid);
+        ListNode*right=merge1(lists,mid+1,end);
+        return merge(left,right);
+    }
+    ListNode* mergeKLists(vector<ListNode*>& lists){
+             if(lists.size()==0)return NULL;
+             return merge1(lists,0,lists.size()-1);
+    }
+};
