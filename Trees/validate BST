@@ -1,0 +1,16 @@
+class Solution {
+public:
+    bool vbst(TreeNode* root,long minVal,long maxVal) {
+        if(root==NULL)return true;
+        if(root->val>=maxVal||root->val<=minVal){
+            return false;
+        }
+        return vbst(root->left,minVal,root->val)&& vbst(root->right,root->val,maxVal);
+ }
+      bool isValidBST(TreeNode*root){
+          if(!root)return true;
+        if(!root->left && !root->right)return true;
+        return vbst(root,LONG_MIN,LONG_MAX);
+    }
+    
+};
