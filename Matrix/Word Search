@@ -1,3 +1,12 @@
+Approach:
+
+1. first we traverse the matrix and try to find the first letter of the target.
+2. if first letter is found, we call the function "search" to find the word.
+3. "search" function basically tries to find the word in the left right top bottom directions respectively.
+4. if the word is found, "search" function returns true.
+
+
+
 class Solution {
 public:
     bool search(int i,int j,int n,int m,vector<vector<char>>& board,string& word,int k){
