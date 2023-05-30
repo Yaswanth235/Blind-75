@@ -1,0 +1,41 @@
+Given two integer arrays preorder and inorder where preorder is the preorder traversal of a binary tree and 
+inorder is the inorder traversal of the same tree, construct and return the binary tree.
+
+Approach:
+
+1. create a node from postorder array(since it starts with root node).
+2. now find the element in inorder array and store its index in a variable.
+3. since inorder stores the left subtree first, call the function for left subarray of inorder.
+4. then same for right side.
+
+ins     id                       ine
+9       3       15      20       7  -->inorder
+
+9       15       7      20       3  -->postorder
+                                post
+
+
+now in postorder traversal, last element is root so we start the traversal from last.
+now we find the value in inorder array and assign the left part of inorder array to root->left(ins to id) and right part to root->right(id to ine).
+
+Code:
+
+Node* soltn(int in[],int post[],int ins,int ine,int &posIn){
+    if(ins>ine) return NULL;
+    Node* head=new Node(post[posIn--]);
+    int inInd;
+    for(int i=ins;i<=ine;i++){
+        if(in[i]==head->data){
+            inInd=i;
+            break;
+        }
+    }
+    head->right=soltn(in,post,inInd+1,ine,posIn);
+    head->left=soltn(in,post,ins,inInd-1,posIn);
+    return head;
+}
+
+Node *buildTree(int in[], int post[], int n) {
+    int posIn=n-1;
+    return soltn(in,post,0,n-1,posIn);
+}
