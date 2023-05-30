@@ -1,0 +1,39 @@
+Approach:
+
+printing all paths and checking sum == k.
+1. we need a vector to store the visited node and a counting variable.
+2. create a function which solves the problem.
+3. we add the current node in our path to the vector.
+4. recursively call the function to the left and right.
+5. now checking for sum path..we add the elements from last and check if sum==k. if equal, increment the counter.
+6. to go back, pop back the last element.
+
+
+
+
+
+
+Code:
+
+class Solution {
+public:
+  void solve(TreeNode*root,int targetSum,int &c,vector<int>ans){
+        if(root==NULL)return;
+        ans.push_back(root->val);
+        solve(root->left,targetSum,c,ans);
+        solve(root->right,targetSum,c,ans);
+        long long int sum=0;
+        int n=ans.size();
+        for(int i=n-1;i>=0;i--){
+            sum+=ans[i];
+            if(sum==targetSum)c++;
+        }
+        ans.pop_back();
+    }
+  int pathSum(TreeNode*root,int targetSum){
+       vector<int>ans;
+        int c=0;
+        solve(root,targetSum,c,ans);
+        return c;
+    }
+};
