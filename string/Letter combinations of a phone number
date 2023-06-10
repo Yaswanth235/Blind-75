@@ -1,0 +1,40 @@
+Approach:(approach for digits="23")
+1. Initially, the queue contains an empty string: q = [""].
+2.The front element of the queue is an empty string. Since its length is not equal to n, the letters corresponding to the digit 2 ("abc") are appended to it, resulting in the strings "a", "b", and "c". These three strings are pushed into the queue: q = ["a", "b", "c"].
+3.The front element of the queue is "a". Its length is not equal to n, so the letters corresponding to the digit 3 ("def") are appended to it, resulting in the strings "ad", "ae", and "af". These three strings are pushed into the queue: q = ["b", "c", "ad", "ae", "af"].
+4.Similarly, the front element "b" generates the strings "bd", "be", "bf", and they are added to the queue: q = ["c", "ad", "ae", "af", "bd", "be", "bf"].
+5.The front element "c" generates the strings "cd", "ce", "cf", and they are added to the queue: q = ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
+6.Finally, the front elements "ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf" have a length of 2, so they are added to the list vector.
+7.At the end of the while loop, the list vector will contain all the generated combinations: list = ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
+
+Therefore, the combinations vector will also contain these letter combinations: combinations = ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
+
+
+Code:
+vector<string> letterCombinationsUtil(vector<int>v,int n,const string table[]){
+    vector<string>list;
+    queue<string>q;
+    q.push("");
+    while (!q.empty()) {
+        string s=q.front();
+        q.pop();
+        if (s.length()==n)
+            list.push_back(s);
+        else
+            for(auto letter:table[v[s.length()]])
+                q.push(s+letter);
+    }
+    return list;
+}
+    vector<string> letterCombinations(string digits){
+        if(digits.length()==0)return {};
+         vector<int>v;
+         for(auto it:digits){
+             v.push_back(it-'0');
+        }
+        int n=v.size();
+         string table[10]= {"0","1","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+        vector<string>list=letterCombinationsUtil(v,n,table);
+        return list;
+    }
+};
