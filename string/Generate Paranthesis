@@ -1,0 +1,42 @@
+Approach:
+
+1. balanced paranthesis is formed when 
+    1. opening bracket count is less than n.
+    2. closing bracket count is less than opening bracket count.
+
+2.                                (
+                                 / \
+                                ()  ((--(()--and continues 
+                                /    \ 
+                               ()(    (((
+                               / \
+  here oc==n bur cc<oc      ()((  ()()
+                             /      \
+                           ()(()    ()()(
+                            /          \
+                          ()(())     ()()()
+
+Code:
+
+class Solution {
+public:
+    void solve(vector<string>&v,int n,int oc,int cc,string s){
+        if(oc==n&&cc==n){
+            v.push_back(s);
+            return;
+        }
+        if(oc<n){
+            solve(v,n,oc+1,cc,s+'(');
+        }
+        if(cc<oc){
+            solve(v,n,oc,cc+1,s+')');
+        }
+    }
+    vector<string>generateParenthesis(int n) {
+          vector<string>v;
+        int oc=0,cc=0;
+        string s="";
+        solve(v,n,oc,cc,s);
+        return v;
+    }
+};
