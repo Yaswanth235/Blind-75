@@ -1,0 +1,64 @@
+The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)
+
+P   A   H   N
+A P L S I I G
+Y   I   R
+
+And then read line by line: "PAHNAPLSIIGYIR"
+Write the code that will take a string and make this conversion given a number of rows:
+string convert(string s, int numRows);
+
+Approach:
+
+1.Initialize an empty vector ans with size equal to numRows (3 in this case). This vector will store the characters in each row of the ZigZag pattern.
+2.Since numRows is not equal to 1, the code proceeds to perform the ZigZag conversion.
+3.Set a boolean flag flag to false. This flag is used to determine the direction of traversal while filling the rows.
+4.Initialize an index i as 0. This index represents the current row.
+
+5.Iterate through each character it in the input string s:
+
+6.Append the character it to the current row in ans. The characters will be added to the corresponding rows in a ZigZag pattern.
+
+7.Check if the current row is either the first row (i == 0) or the last row (i == numRows - 1).
+
+8.If true, toggle the value of flag by flipping it from false to true or vice versa. This will determine the next direction of traversal.
+9.Determine the next row index based on the value of flag:
+If flag is true, increment the row index i by 1, moving to the next row.
+If flag is false, decrement the row index i by 1, moving to the row above.
+After iterating through all characters in s, the characters in each row of ans will be filled according to the ZigZag pattern.
+The first row will contain "PAHN".
+The second row will contain "APLSI".
+The third row will contain "YIR".
+Concatenate the strings in ans to form the final converted string res.
+res = "PAHNAPLSIYIR"
+Return the converted string res as the result.
+
+
+Code:
+
+class Solution {
+public:
+    string convert(string s, int numRows) {
+        vector<string>ans(numRows);
+        if(numRows==1)return s;
+        bool flag=false;
+        int i=0;
+        for(auto it:s){
+            ans[i]+=it;
+            if(i==0||i==numRows-1){
+                flag=!flag;
+            }
+            if(flag){
+                i+=1;
+            }
+            else{
+                i-=1;
+            }
+        }
+        string res="";
+        for(auto it:ans){
+            res+=it;
+        }
+        return res;
+    }
+};
